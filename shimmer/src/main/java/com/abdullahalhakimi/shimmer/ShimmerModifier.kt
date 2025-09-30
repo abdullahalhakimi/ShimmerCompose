@@ -8,7 +8,6 @@ import androidx.compose.ui.composed
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import kotlin.math.tan
 
 fun Modifier.shimmer(
@@ -37,5 +36,5 @@ fun Modifier.shimmer(
         end = Offset(x = translateAnim + 200f, y = 200f * tan(Math.toRadians(angle.toDouble())).toFloat())
     )
 
-    Modifier.background(brush) // ✅ return Modifier instead of this.background
+    Modifier.background(brush)
 }
