@@ -9,7 +9,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun shimmerTextLine(modifier: Modifier = Modifier) {
+fun ShimmerTextLine(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .height(20.dp)
@@ -20,7 +20,7 @@ fun shimmerTextLine(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun shimmerAvatar(modifier: Modifier = Modifier) {
+fun ShimmerAvatar(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .size(64.dp)
@@ -30,7 +30,7 @@ fun shimmerAvatar(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun shimmerCard(modifier: Modifier = Modifier) {
+fun ShimmerCard(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier
             .fillMaxWidth()
@@ -38,8 +38,8 @@ fun shimmerCard(modifier: Modifier = Modifier) {
             .shimmer()
             .padding(16.dp)
     ) {
-        shimmerTextLine(modifier = Modifier.fillMaxWidth(0.6f))
+        ShimmerTextLine(modifier = Modifier.fillMaxWidth(0.6f))
         Spacer(modifier = Modifier.height(8.dp))
-        shimmerTextLine(modifier = Modifier.fillMaxWidth())
+        ShimmerTextLine(modifier = Modifier.fillMaxWidth())
     }
 }

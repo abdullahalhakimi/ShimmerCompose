@@ -14,9 +14,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.abdullahalhakimi.sample.ui.theme.ShimmerComposeTheme
-import com.abdullahalhakimi.shimmer.shimmerAvatar
-import com.abdullahalhakimi.shimmer.shimmerCard
-import com.abdullahalhakimi.shimmer.shimmerTextLine
+import com.abdullahalhakimi.shimmer.ShimmerAvatar
+import com.abdullahalhakimi.shimmer.ShimmerCard
+import com.abdullahalhakimi.shimmer.ShimmerTextLine
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,10 +37,10 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun SampleScreen() {
     Column(modifier = Modifier.padding(16.dp)) {
-        shimmerTextLine()
+        ShimmerTextLine()
         Spacer(modifier = Modifier.height(16.dp))
-        shimmerAvatar()
+        ShimmerAvatar()
         Spacer(modifier = Modifier.height(16.dp))
-        shimmerCard()
+        ShimmerCard()
     }
 }
