@@ -36,5 +36,5 @@ fun Modifier.shimmer(
         end = Offset(x = translateAnim + 200f, y = 200f * tan(Math.toRadians(angle.toDouble())).toFloat())
     )
 
-    Modifier.background(brush)
+    this.background(brush)
 }
