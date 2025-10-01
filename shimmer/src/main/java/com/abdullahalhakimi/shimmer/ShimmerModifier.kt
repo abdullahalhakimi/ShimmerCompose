@@ -39,7 +39,7 @@ fun Modifier.shimmer(
             animation = tween(durationMillis, easing = LinearEasing),
             repeatMode = RepeatMode.Restart
         ),
-        label = "shimmerAnim"
+        label = "shimmerAnim",
     )
 
     val (start, end) = when (direction) {
