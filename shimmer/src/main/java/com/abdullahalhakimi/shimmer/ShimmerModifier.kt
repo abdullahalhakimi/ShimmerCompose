@@ -2,6 +2,7 @@ package com.abdullahalhakimi.shimmer
 
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
@@ -24,13 +25,17 @@ enum class ShimmerDirection {
  * Shimmer modifier with customizable colors, speed, angle, shape, and direction.
  */
 fun Modifier.shimmer(
-    colors: List<Color> = ShimmerDefaults.Light,
+    colors: List<Color>? = null,
     durationMillis: Int = 1000,
     angle: Float = 20f,
     direction: ShimmerDirection = ShimmerDirection.Diagonal,
     shape: Shape? = null,
     shimmerWidth: Float = 200f
 ): Modifier = composed {
+    val isDark = isSystemInDarkTheme()
+    val actualColors = colors ?: if (isDark) ShimmerDefaults.Dark else ShimmerDefaults.Light
+
+
     val transition = rememberInfiniteTransition(label = "shimmer")
     val translateAnim by transition.animateFloat(
         initialValue = 0f,
@@ -54,7 +59,7 @@ fun Modifier.shimmer(
     }
 
     val brush = Brush.linearGradient(
-        colors = colors,
+        colors = actualColors,
         start = start,
         end = end
     )
