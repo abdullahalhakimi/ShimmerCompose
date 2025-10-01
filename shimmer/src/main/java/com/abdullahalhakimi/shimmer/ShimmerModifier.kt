@@ -5,19 +5,31 @@ import androidx.compose.foundation.background
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import kotlin.math.tan
 
+
+/**
+ * Shimmer direction options.
+ */
+enum class ShimmerDirection {
+    LeftToRight, RightToLeft, TopToBottom, BottomToTop, Diagonal
+}
+
+/**
+ * Shimmer modifier with customizable colors, speed, angle, shape, and direction.
+ */
 fun Modifier.shimmer(
-    colors: List<Color> = listOf(
-        Color.LightGray.copy(alpha = 0.6f),
-        Color.LightGray.copy(alpha = 0.2f),
-        Color.LightGray.copy(alpha = 0.6f)
-    ),
+    colors: List<Color> = ShimmerDefaults.Light,
     durationMillis: Int = 1000,
-    angle: Float = 20f
+    angle: Float = 20f,
+    direction: ShimmerDirection = ShimmerDirection.Diagonal,
+    shape: Shape? = null,
+    shimmerWidth: Float = 200f
 ): Modifier = composed {
     val transition = rememberInfiniteTransition(label = "shimmer")
     val translateAnim by transition.animateFloat(
@@ -30,11 +42,43 @@ fun Modifier.shimmer(
         label = "shimmerAnim"
     )
 
+    val (start, end) = when (direction) {
+        ShimmerDirection.LeftToRight -> Offset(translateAnim, 0f) to Offset(translateAnim + shimmerWidth, 0f)
+        ShimmerDirection.RightToLeft -> Offset(-translateAnim, 0f) to Offset(-translateAnim - shimmerWidth, 0f)
+        ShimmerDirection.TopToBottom -> Offset(0f, translateAnim) to Offset(0f, translateAnim + shimmerWidth)
+        ShimmerDirection.BottomToTop -> Offset(0f, -translateAnim) to Offset(0f, -translateAnim - shimmerWidth)
+        ShimmerDirection.Diagonal -> Offset(translateAnim, 0f) to Offset(
+            translateAnim + shimmerWidth,
+            shimmerWidth * tan(Math.toRadians(angle.toDouble())).toFloat()
+        )
+    }
+
     val brush = Brush.linearGradient(
         colors = colors,
-        start = Offset(x = translateAnim, y = 0f),
-        end = Offset(x = translateAnim + 200f, y = 200f * tan(Math.toRadians(angle.toDouble())).toFloat())
+        start = start,
+        end = end
     )
 
-    this.background(brush)
+    var base = this.background(brush)
+    if (shape != null) {
+        base = base.clip(shape)
+    }
+    base
+}
+
+/**
+ * Preset shimmer color themes.
+ */
+object ShimmerDefaults {
+    val Light = listOf(
+        Color.LightGray.copy(alpha = 0.6f),
+        Color.LightGray.copy(alpha = 0.2f),
+        Color.LightGray.copy(alpha = 0.6f)
+    )
+
+    val Dark = listOf(
+        Color.DarkGray.copy(alpha = 0.6f),
+        Color.Gray.copy(alpha = 0.2f),
+        Color.DarkGray.copy(alpha = 0.6f)
+    )
 }
